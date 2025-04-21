@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Integrated Services{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-8 text-center">
+            <h1 class="display-4">Welcome to Integrated Services</h1>
+            <p class="lead mt-4">
+                A platform that brings together multiple microservices for seamless user experience.
+            </p>
+            <div class="mt-5">
+                {% if not session.get('user_id') %}
+                <a href="{{ url_for('login') }}" class="btn btn-primary btn-lg me-3">Login</a>
+                <a href="{{ url_for('register') }}" class="btn btn-outline-primary btn-lg">Register</a>
+                {% else %}
+                <a href="{{ url_for('dashboard') }}" class="btn btn-primary btn-lg">Go to Dashboard</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="row mt-5">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Authentication</h5>
+                    <p class="card-text">Secure user registration and login with role-based access control.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Session Management</h5>
+                    <p class="card-text">Token-based authentication with automatic refresh and inactivity timeout.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Activity Tracking</h5>
+                    <p class="card-text">Comprehensive logging of user activities and system events.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Feedback System</h5>
+                    <p class="card-text">Submit and manage user feedback with admin capabilities.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - Integrated Services{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <h1 class="h2 mb-4">Dashboard</h1>
+    
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Welcome, {{ session.get('name') }}</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>Email:</strong> {{ session.get('email') }}</p>
+                    <p><strong>Role:</strong> {{ session.get('role') }}</p>
+                    <hr>
+                    <div class="d-grid gap-2">
+                        <a href="{{ url_for('feedback') }}" class="btn btn-primary">Submit Feedback</a>
+                        <a href="{{ url_for('activity') }}" class="btn btn-outline-primary">View My Activity</a>
+                        {% if session.get('role') == 'admin' %}
+                        <a href="{{ url_for('admin_feedback') }}" class="btn btn-outline-primary">Manage Feedback</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Recent Activity</h5>
+                </div>
+                <div class="card-body">
+                    {% if activity_logs and activity_logs.get('logs') %}
+                        {% for log in activity_logs.get('logs')[:5] %}
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between">
+                                    <strong>{{ log.action|default('Activity', true) }}</strong>
+                                    <small class="text-muted">{{ log.timestamp }}</small>
+                                </div>
+                                <p class="mb-0">{{ log.message }}</p>
+                            </div>
+                            {% if not loop.last %}<hr>{% endif %}
+                        {% endfor %}
+                        <div class="text-center mt-3">
+                            <a href="{{ url_for('activity') }}" class="btn btn-sm btn-outline-secondary">View All Activity</a>
+                        </div>
+                    {% else %}
+                        <p class="text-center">No recent activity found.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Session Information</h5>
+                </div>
+                <div class="card-body">
+                    <p>Your session is active. The system automatically refreshes your session tokens to maintain your login status.</p>
+                    <p>For security reasons, if you remain inactive for an extended period, you may be automatically logged out.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Quick Links</h5>
+                </div>
+                <div class="card-body">
+                    <div class="list-group">
+                        <a href="{{ url_for('feedback') }}" class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">Submit Feedback</h5>
+                                <small>→</small>
+                            </div>
+                            <p class="mb-1">Share your thoughts and suggestions with us</p>
+                        </a>
+                        <a href="{{ url_for('activity') }}" class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">My Activity</h5>
+                                <small>→</small>
+                            </div>
+                            <p class="mb-1">View your recent activities and session history</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

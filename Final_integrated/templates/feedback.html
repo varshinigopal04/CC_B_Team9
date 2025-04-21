@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Submit Feedback - Integrated Services{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <h1 class="h2 mb-4">Submit Feedback</h1>
+    
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">We Value Your Feedback</h5>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        {{ form.hidden_tag() }}
+                        <div class="mb-3">
+                            {{ form.message.label(class="form-label") }}
+                            {{ form.message(class="form-control", rows=5) }}
+                            {% if form.message.errors %}
+                                <div class="text-danger">
+                                    {% for error in form.message.errors %}
+                                        <small>{{ error }}</small>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="d-grid gap-2">
+                            {{ form.submit(class="btn btn-primary") }}
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">About Feedback</h5>
+                </div>
+                <div class="card-body">
+                    <p>Your feedback helps us improve our services. We appreciate your thoughts, suggestions, and reports on any issues you may have encountered.</p>
+                    <p>All feedback is reviewed by our team, and we take your comments seriously.</p>
+                    <p><strong>Note:</strong> This is not a support ticket system. If you need immediate assistance, please contact support directly.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

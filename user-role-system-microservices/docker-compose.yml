@@ -1,0 +1,70 @@
+version: "3"
+
+services:
+  auth-service:
+    build: ./auth-service
+    ports:
+      - "5000:5000"
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/auth-db
+    networks:
+      - app-network
+
+  user-service:
+    build: ./user-service
+    ports:
+      - "5001:5001"
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/user-db
+    networks:
+      - app-network
+
+  issue-service:
+    build: ./issue-service
+    ports:
+      - "5002:5002"
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/issue-db
+    networks:
+      - app-network
+
+  feedback-service:
+    build: ./feedback-service
+    ports:
+      - "5003:5003"
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/feedback-db
+    networks:
+      - app-network
+
+  export-service:
+    build: ./export-service
+    ports:
+      - "5004:5004"
+    networks:
+      - app-network
+
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+    depends_on:
+      - auth-service
+      - user-service
+      - issue-service
+      - feedback-service
+      - export-service
+
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

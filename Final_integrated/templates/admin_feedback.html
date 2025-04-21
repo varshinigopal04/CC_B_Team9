@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Manage Feedback - Integrated Services{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <h1 class="h2 mb-4">Feedback Management</h1>
+    
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="card-title mb-0">All User Feedback</h5>
+        </div>
+        <div class="card-body">
+            {% if feedbacks and feedbacks|length > 0 %}
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Submitted By</th>
+                                <th>Date</th>
+                                <th>Message</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for feedback in feedbacks %}
+                            <tr>
+                                <td>{{ feedback.submittedBy }}</td>
+                                <td>{{ feedback.submittedAt }}</td>
+                                <td>{{ feedback.message }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="alert alert-info">
+                    No feedback submissions found.
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
